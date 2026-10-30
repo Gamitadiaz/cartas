@@ -1,0 +1,714 @@
+/* Estilo "mesa de noche": casi negro con un tinte verde, como el paño de una mesa con la luz apagada,
+   y un solo acento verde menta. Las cartas son de color marfil para que destaquen.
+   --tinta es el color del texto; --sobre-acento, el del texto encima de un botón menta. */
+:root {
+  --fondo: #0b1210;
+  --capa: #131d1a;
+  --capa-2: #1c2925;
+  --linea: #22322d;
+  --tinta: #ecf5f1;
+  --gris: #6f857d;
+  --suave: #a3b8b0;
+  --acento: #3ddc97;
+  --acento-suave: rgb(61 220 151 / 0.14);
+  --sobre-acento: #06241a;
+  --mal: #ff6b6b;
+  --mal-suave: rgb(255 107 107 / 0.14);
+  --marfil: #f4f1ea;
+  --roja: #c8333d;
+  --negra: #1b1f24;
+  color-scheme: dark;
+  font-family: "Archivo Variable", system-ui, sans-serif;
+  font-size: 17px;
+  line-height: 1.45;
+  -webkit-tap-highlight-color: transparent;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  color: var(--tinta);
+  background:
+    radial-gradient(120% 60% at 50% -10%, rgb(61 220 151 / 0.09), transparent 60%),
+    var(--fondo);
+  background-attachment: fixed;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+button:disabled {
+  cursor: default;
+}
+
+:focus-visible {
+  outline: 3px solid var(--acento);
+  outline-offset: 2px;
+}
+
+h1 {
+  margin: 0;
+  font-size: 1.7rem;
+  font-weight: 800;
+  font-stretch: 112%;
+  line-height: 1.05;
+}
+
+p {
+  margin: 0;
+}
+
+.pantalla {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto;
+  padding: max(20px, env(safe-area-inset-top)) 16px max(32px, env(safe-area-inset-bottom));
+}
+
+/* ---------- Portada ---------- */
+
+.portada {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px 0 8px;
+}
+
+.portada h1 {
+  font-size: 3rem;
+  font-stretch: 125%;
+  letter-spacing: -0.02em;
+}
+
+.acento {
+  color: var(--acento);
+}
+
+.paso {
+  color: var(--acento);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.texto-suave {
+  color: var(--suave);
+}
+
+.nota {
+  color: var(--gris);
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+/* ---------- Lista de lecciones ---------- */
+
+.lecciones {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.leccion {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 14px;
+  border: 1px solid var(--linea);
+  border-radius: 18px;
+  background: var(--capa);
+  text-align: left;
+  transition: border-color 0.15s, transform 0.15s;
+}
+
+.leccion:active {
+  transform: scale(0.98);
+}
+
+.leccion:hover {
+  border-color: var(--acento);
+}
+
+.leccion-texto {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.leccion-texto > span {
+  color: var(--suave);
+  font-size: 0.88rem;
+}
+
+.leccion-texto .leccion-dato {
+  color: var(--acento);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.flecha {
+  color: var(--gris);
+}
+
+.anillo {
+  flex-shrink: 0;
+  width: 52px;
+  height: 52px;
+}
+
+.anillo circle {
+  fill: none;
+  stroke-width: 4;
+}
+
+.anillo-fondo {
+  stroke: var(--capa-2);
+}
+
+.anillo-valor {
+  stroke: var(--acento);
+  stroke-linecap: round;
+  transform: rotate(-90deg);
+  transform-origin: center;
+  transition: stroke-dashoffset 0.6s ease;
+}
+
+.anillo text {
+  fill: var(--tinta);
+  font-size: 16px;
+  font-weight: 800;
+  text-anchor: middle;
+}
+
+/* ---------- Encabezado de lección ---------- */
+
+.encabezado {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.volver {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 42px;
+  height: 42px;
+  border: 1px solid var(--linea);
+  border-radius: 14px;
+  background: var(--capa);
+  font-size: 1.2rem;
+}
+
+/* ---------- Explicaciones plegables ---------- */
+
+.explicacion {
+  border: 1px solid var(--linea);
+  border-radius: 16px;
+  background: var(--capa);
+}
+
+.explicacion summary {
+  padding: 12px 14px;
+  font-weight: 700;
+  cursor: pointer;
+  list-style: none;
+}
+
+.explicacion summary::after {
+  content: "+";
+  float: right;
+  color: var(--acento);
+}
+
+.explicacion[open] summary::after {
+  content: "−";
+}
+
+.explicacion-cuerpo {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 0 14px 14px;
+  color: var(--suave);
+  font-size: 0.93rem;
+}
+
+.explicacion-cuerpo strong {
+  color: var(--tinta);
+}
+
+.explicacion-cuerpo ul {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0;
+  padding-left: 18px;
+}
+
+.formula {
+  padding: 10px;
+  border-radius: 12px;
+  background: var(--acento-suave);
+  color: var(--acento);
+  font-weight: 700;
+  text-align: center;
+}
+
+.tabla-hilo {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.tabla-hilo div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 10px 6px;
+  border-radius: 12px;
+  background: var(--capa-2);
+  text-align: center;
+}
+
+.tabla-hilo strong {
+  color: var(--acento);
+  font-size: 1.3rem;
+  font-stretch: 120%;
+}
+
+.tabla-hilo span {
+  font-size: 0.8rem;
+}
+
+/* ---------- Cartas ---------- */
+
+.carta {
+  position: relative;
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 92px;
+  border-radius: 9px;
+  background: var(--marfil);
+  color: var(--negra);
+  box-shadow: 0 6px 16px rgb(0 0 0 / 0.4);
+  animation: repartir 0.25s ease-out;
+}
+
+.carta.roja {
+  color: var(--roja);
+}
+
+.carta.grande {
+  width: 132px;
+  height: 188px;
+  border-radius: 14px;
+}
+
+.carta .esquina {
+  position: absolute;
+  top: 5px;
+  left: 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 0.95rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.carta .esquina small {
+  font-size: 0.8rem;
+}
+
+.carta .esquina.abajo {
+  top: auto;
+  right: 6px;
+  bottom: 5px;
+  left: auto;
+  transform: rotate(180deg);
+}
+
+.carta .centro {
+  font-size: 1.9rem;
+}
+
+.carta.grande .esquina {
+  top: 9px;
+  left: 10px;
+  font-size: 1.5rem;
+}
+
+.carta.grande .esquina.abajo {
+  top: auto;
+  right: 10px;
+  bottom: 9px;
+  left: auto;
+}
+
+.carta.grande .esquina small {
+  font-size: 1.2rem;
+}
+
+.carta.grande .centro {
+  font-size: 4.2rem;
+}
+
+.carta.reverso {
+  border: 4px solid var(--marfil);
+  background:
+    repeating-linear-gradient(45deg, var(--acento) 0 3px, transparent 3px 9px),
+    repeating-linear-gradient(-45deg, var(--acento) 0 3px, #0e3a2a 3px 9px);
+}
+
+@keyframes repartir {
+  from {
+    opacity: 0;
+    transform: translateY(-14px) rotate(-4deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .carta {
+    animation: none;
+  }
+}
+
+.mano {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.centro-carta {
+  display: flex;
+  justify-content: center;
+  padding: 12px 0;
+}
+
+/* ---------- Mesa ---------- */
+
+.mesa {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 18px 16px;
+  border: 1px solid var(--linea);
+  border-radius: 22px;
+  background: radial-gradient(130% 100% at 50% 0%, #17362b, var(--capa) 70%);
+}
+
+.lado {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.etiqueta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  color: var(--suave);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.etiqueta strong {
+  color: var(--tinta);
+  font-size: 1rem;
+}
+
+.chip {
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--acento-suave);
+  color: var(--acento);
+  font-size: 0.75rem;
+}
+
+/* ---------- Botones ---------- */
+
+.acciones {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+  gap: 8px;
+}
+
+.boton {
+  min-height: 52px;
+  padding: 0 18px;
+  border: 0;
+  border-radius: 16px;
+  background: var(--acento);
+  color: var(--sobre-acento);
+  font-weight: 800;
+  transition: transform 0.1s, opacity 0.15s;
+}
+
+.boton:active {
+  transform: scale(0.97);
+}
+
+.boton.secundario {
+  border: 1px solid var(--linea);
+  background: var(--capa-2);
+  color: var(--tinta);
+}
+
+.boton.ancho {
+  width: 100%;
+}
+
+.opciones {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.opciones.tres {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.opcion {
+  min-height: 54px;
+  border: 1px solid var(--linea);
+  border-radius: 16px;
+  background: var(--capa);
+  font-weight: 700;
+  transition: background 0.15s, border-color 0.15s, opacity 0.15s;
+}
+
+.opcion.grande {
+  min-height: 68px;
+  font-size: 1.5rem;
+  font-stretch: 120%;
+}
+
+.opcion:disabled {
+  opacity: 0.35;
+}
+
+.opcion.correcta {
+  border-color: var(--acento);
+  background: var(--acento-suave);
+  color: var(--acento);
+  opacity: 1;
+}
+
+.opcion.incorrecta {
+  border-color: var(--mal);
+  background: var(--mal-suave);
+  color: var(--mal);
+  opacity: 1;
+}
+
+.resultado {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 14px;
+  border-radius: 16px;
+  font-size: 0.93rem;
+}
+
+.resultado.bien {
+  background: var(--acento-suave);
+}
+
+.resultado.bien > strong {
+  color: var(--acento);
+}
+
+.resultado.mal {
+  background: var(--mal-suave);
+}
+
+.resultado.mal > strong {
+  color: var(--mal);
+}
+
+.resultado.neutro {
+  background: var(--capa-2);
+}
+
+.racha {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 14px;
+  border-radius: 14px;
+  background: var(--capa);
+  color: var(--suave);
+  font-size: 0.85rem;
+}
+
+.racha strong {
+  margin-left: 4px;
+  color: var(--tinta);
+  font-size: 1.1rem;
+  font-stretch: 120%;
+}
+
+/* ---------- Pestañas y selectores ---------- */
+
+.pestanas,
+.selector {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  border-radius: 14px;
+  background: var(--capa);
+}
+
+.pestanas button,
+.selector button {
+  flex: 1;
+  min-height: 42px;
+  padding: 0 6px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--suave);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.pestanas [aria-selected="true"],
+.selector [aria-pressed="true"] {
+  background: var(--capa-2);
+  color: var(--acento);
+}
+
+.contador-cartas {
+  color: var(--suave);
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+}
+
+.paso-numero {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+}
+
+.paso-numero button {
+  width: 64px;
+  height: 64px;
+  border: 1px solid var(--linea);
+  border-radius: 50%;
+  background: var(--capa);
+  font-size: 1.8rem;
+}
+
+.paso-numero output {
+  min-width: 3ch;
+  font-size: 3rem;
+  font-weight: 800;
+  font-stretch: 125%;
+  text-align: center;
+}
+
+.repaso {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(64px, 1fr));
+  gap: 10px;
+  margin: 0;
+  padding: 0 14px 14px;
+  list-style: none;
+}
+
+.repaso li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  color: var(--acento);
+  font-weight: 700;
+}
+
+.repaso .carta {
+  animation: none;
+}
+
+/* ---------- Conteo real ---------- */
+
+.tarjeta-ejercicio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 16px;
+  border: 1px solid var(--linea);
+  border-radius: 22px;
+  background: var(--capa);
+  text-align: center;
+}
+
+.dato {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--suave);
+  font-size: 0.85rem;
+}
+
+.dato strong {
+  color: var(--tinta);
+  font-size: 2.6rem;
+  font-stretch: 125%;
+  line-height: 1.1;
+}
+
+.zapato {
+  display: flex;
+  gap: 24px;
+}
+
+.pila {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  width: 64px;
+  height: 130px;
+  color: var(--gris);
+  font-size: 0.75rem;
+}
+
+.pila-relleno {
+  width: 100%;
+  min-height: 4px;
+  border-radius: 6px;
+}
+
+.pila-relleno.descartes {
+  background: repeating-linear-gradient(0deg, var(--capa-2) 0 3px, var(--linea) 3px 5px);
+}
+
+.pila-relleno.quedan {
+  background: repeating-linear-gradient(0deg, var(--acento) 0 3px, #1f7a54 3px 5px);
+}
